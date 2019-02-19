@@ -38,6 +38,10 @@ if ~iscell(db.mouse_name)
         ops.fsroot{j} = dir(fullfile(ops.RootDir, ops.SubDirs{j}, '*.tif'));
         ops.fsroot{j} = cat(1, ops.fsroot{j}, ...
             dir(fullfile(ops.RootDir, ops.SubDirs{j}, '*.tiff')));
+        if length(ops.fsroot{j}) == 0
+            error(['could not find tif file: ',fullfile(ops.RootDir, ops.SubDirs{j}, '*.tif')])
+            dbstack
+        end
         for k = 1:length(ops.fsroot{j})
             ops.fsroot{j}(k).name = fullfile(ops.RootDir, ops.SubDirs{j}, ops.fsroot{j}(k).name);
         end
